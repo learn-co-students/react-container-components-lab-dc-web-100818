@@ -18,9 +18,8 @@ class SearchableMovieReviewsContainer extends Component {
   }
 
   getReview = (e) => {
-    e.preventDefault();
-    let term = e.target.firstChild.value;
-
+    let term = this.state.searchTerm
+    
     fetch(`https://api.nytimes.com/svc/movies/v2/reviews/search.json?api-key=f98593a095b44546bf4073744b540da0&query=${term}`)
       .then(response => response.json())
       .then(data => {
@@ -28,27 +27,24 @@ class SearchableMovieReviewsContainer extends Component {
           reviews: data.results
         })
       })
+    }
 
+  handleSearchChange = (e) => {
+    let value = e.target.firstChild.value
     this.setState({
-      searchTerm: term
+      searchTerm: value
     })
-
-  }
-
-  test = (e) => {
-    e.target.firstChild.value = this.state.searchTerm
   }
 
   render() {
     return (
       <div className="searchable-movie-reviews">
         <form onSubmit={this.getReview}>
-          <input onChange={(e) => this.test} type="text"></input>
+          <input onChange={this.handleSearchChange} type="text"></input>
           <input type="submit"></input>
         </form>
         <div>
           <MovieReviews reviews={this.state.reviews} />
-          
         </div>
       </div>
     )
