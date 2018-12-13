@@ -22,6 +22,7 @@ class SearchableMovieReviewsContainer extends Component {
   }
 
   searchChange = (event) => {
+    event.persist()
     this.setState({searchTerm: event.target.value})
   }
 
@@ -29,7 +30,7 @@ class SearchableMovieReviewsContainer extends Component {
     return (
       <div className="searchable-movie-reviews">
         <form onSubmit={this.handleSubmit}>
-          <input type="text" onChage={this.searchChange}/>
+          <input type="text" onChange={this.searchChange} value={this.state.searchTerm}/>
           <input type='submit' />
         </form>
         <MovieReviews reviews={this.state.reviews} />
